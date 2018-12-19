@@ -13,26 +13,6 @@ namespace Zapasi
 {
     public partial class Form1 : Form
     {
-        public Form1()
-        {
-            InitializeComponent();
-            stratDGVs = new DataGridView[] {
-
-
-                    dataGridView3,
-                    dataGridView4,
-                    dataGridView5,
-                    dataGridView6,
-                    dataGridView7,
-        };
-
-        }
-        Solver solver;
-        private void button1_Click(object sender, EventArgs e)
-        {
-            SolvePrimer();
-            OutResults();
-        }
         struct data
         {
             public string name;
@@ -40,6 +20,42 @@ namespace Zapasi
             public double cc;
             public double v;
         }
+
+        Solver solver;
+        int T = 36;
+        int N = 20;
+        double F = 3000;
+
+        int[] ED;
+        double[] CC;
+        double[] V;
+        string[] names;
+        int f = 3;
+
+        int[,] Kr;
+        int[,] C;
+
+        DataGridView[] stratDGVs;
+
+
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                SolvePrimer();
+                OutResults();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
 
         bool LoadPrimer()
         {
@@ -51,7 +67,7 @@ namespace Zapasi
 
             if (!int.TryParse(tbT.Text, out T))
             {
-                MessageBox.Show("Введите F");
+                MessageBox.Show("Введите T");
                 return false;
             }
             return true;
@@ -128,15 +144,15 @@ namespace Zapasi
                 }
             }
 
-            if(stratDGVs.Length == f)
+            if (stratDGVs.Length == f)
             {
-                for(int i =0; i<f; i++)
+                for (int i = 0; i < f; i++)
                 {
                     DataTable dt = new DataTable();
                     for (int j = 0; j < stratDGVs[i].ColumnCount; j++)
                         dt.Columns.Add(stratDGVs[i].Columns[j].HeaderText);
 
-                    for(int j=0; j<N; j++)
+                    for (int j = 0; j < N; j++)
                     {
                         dt.Rows.Add(names[j], Kr[j, i], C[j, i]);
                     }
@@ -176,131 +192,36 @@ namespace Zapasi
                 new Font("Arial", 12, FontStyle.Bold);
 
         }
-        int T = 36;
-        int N = 20;
-        double F = 3000;
 
-        int[] ED;
-        double[] CC;
-        double[] V;
-        string[] names;
-        int f = 3;
-
-        int[,] Kr;
-        int[,] C;
-
-        DataGridView[] stratDGVs;
 
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (!LoadPrimer())
-                return;
-            if (!LoadData())
-                return;
-            if (!LoadStrat())
-                return;
-            button1.Enabled = true;
+            try
+            {
+                if (!LoadPrimer())
+                    return;
+                if (!LoadData())
+                    return;
+                if (!LoadStrat())
+                    return;
+                button1.Enabled = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
-
-
-
-
-
-
-        //void Primer()
-        //{
-
-        //    int T = 36;
-        //    int N = 20;
-        //    int F = 3000;
-
-        //    double[] ED =
-        //    {
-        //        2, 4, 1, 2,
-        //        2, 6, 5, 9,
-        //        1, 2, 7, 6,
-        //        9, 9, 6, 4,
-        //        9, 4, 1, 4
-        //    };
-
-        //    double[] CC =
-        //    {
-        //        6, 5, 6, 7,
-        //        4, 8, 7, 9,
-        //        12, 5, 4.3, 5.3,
-        //        2, 4, 3, 5,
-        //        6, 7, 5, 7
-        //    };
-
-
-
-        //    double[] V =
-        //    {
-        //        4400, 3200, 4500, 2000,
-        //        1200, 3400, 123, 245,
-        //        156, 236, 10344, 1100,
-        //        1000, 200, 3456, 1200,
-        //        250, 300, 400, 1600
-        //    };
-
-        //    int f = 3;
-
-        //    int[,] Kr =
-        //    {
-        //        {4, 5, 7 },
-        //        {4, 5, 7 },
-        //        {4, 5, 7 },
-        //        {4, 5, 7 },
-        //        {4, 5, 7 },
-        //        {4, 5, 7 },
-        //        {4, 5, 7 },
-        //        {4, 5, 7 },
-        //        {4, 5, 7 },
-        //        {4, 5, 7 },
-        //        {4, 5, 7 },
-        //        {4, 5, 7 },
-        //        {4, 5, 7 },
-        //        {4, 5, 7 },
-        //        {4, 5, 7 },
-        //        {4, 5, 7 },
-        //        {4, 5, 7 },
-        //        {4, 5, 7 },
-        //        {4, 5, 7 },
-        //        {4, 5, 7 }
-        //    };
-        //    int[,] C =
-        //    {
-        //        {4, 5, 7 },
-        //        {4, 5, 7 },
-        //        {4, 5, 7 },
-        //        {4, 5, 7 },
-        //        {4, 5, 7 },
-        //        {4, 5, 7 },
-        //        {4, 5, 7 },
-        //        {4, 5, 7 },
-        //        {4, 5, 7 },
-        //        {4, 5, 7 },
-        //        {4, 5, 7 },
-        //        {4, 5, 7 },
-        //        {4, 5, 7 },
-        //        {4, 5, 7 },
-        //        {4, 5, 7 },
-        //        {4, 5, 7 },
-        //        {4, 5, 7 },
-        //        {4, 5, 7 },
-        //        {4, 5, 7 },
-        //        {4, 5, 7 }
-        //    };
-
-
-
-        //    Solver solver = new Solver(N, T, Kr, C, f, F, V, CC, ED);
-        //    var best_ind = solver.Calculate();
-        //    MessageBox.Show("Лучшее " + best_ind);
-
-        //}
-
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            stratDGVs = new DataGridView[] {
+                    dataGridView3,
+                    dataGridView4,
+                    dataGridView5,
+                    dataGridView6,
+                    dataGridView7,
+        };
+        }
     }
 }
