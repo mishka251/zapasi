@@ -21,20 +21,19 @@ namespace Zapasi
             public double v;
         }
 
+        string projDir;
+
         Solver solver;
         int T = 36;
         int N = 20;
         double F = 3000;
-
         int[] ED;
         double[] CC;
         double[] V;
         string[] names;
         int f = 3;
-
         int[,] Kr;
         int[,] C;
-
         DataGridView[] stratDGVs;
 
 
@@ -75,7 +74,12 @@ namespace Zapasi
 
         bool LoadData()
         {
-            OpenFileDialog ofd1 = new OpenFileDialog();
+            OpenFileDialog ofd1 = new OpenFileDialog
+            {
+                Title = "Выберите файл данных",
+                InitialDirectory = projDir,
+                Filter = "CSV файлы | *.csv"
+            };
             if (ofd1.ShowDialog() != DialogResult.OK)
                 return false;
 
@@ -121,9 +125,13 @@ namespace Zapasi
 
         bool LoadStrat()
         {
-            OpenFileDialog ofd2 = new OpenFileDialog();
-            ofd2.Multiselect = true;
-
+            OpenFileDialog ofd2 = new OpenFileDialog
+            {
+                Multiselect = true,
+                Title = "Выберите файлы стратегий",
+                InitialDirectory = projDir,
+                Filter = "CSV файлы | *.csv"
+            };
             if (ofd2.ShowDialog() != DialogResult.OK)
                 return false;
 
@@ -184,7 +192,6 @@ namespace Zapasi
                 dt.Rows.Add("стратегия" + (i + 1), solver.TO[i], solver.TC[i], solver.TCOST[i]);
             }
 
-            //   dataGridView2.Rows.Clear();
             dataGridView2.Columns.Clear();
 
             dataGridView2.DataSource = dt;
@@ -222,6 +229,12 @@ namespace Zapasi
                     dataGridView6,
                     dataGridView7,
         };
+
+            var exedit = Directory.GetCurrentDirectory();
+            var tmp = new DirectoryInfo(exedit);
+
+            projDir = tmp.Parent.Parent.Parent.FullName;
+
         }
     }
 }
