@@ -16,16 +16,20 @@ namespace Zapasi
         public Form1()
         {
             InitializeComponent();
+            stratDGVs = new DataGridView[] {
+
+
+                    dataGridView3,
+                    dataGridView4,
+                    dataGridView5,
+                    dataGridView6,
+                    dataGridView7,
+        };
+
         }
         Solver solver;
         private void button1_Click(object sender, EventArgs e)
         {
-           if(! LoadPrimer())
-                return;
-           if(! LoadData())
-                return;
-          if(!  LoadStrat())
-                return;
             SolvePrimer();
             OutResults();
         }
@@ -86,7 +90,7 @@ namespace Zapasi
             CC = new double[N];
             V = new double[N];
 
-            for (int i = 0; i <N; i++)
+            for (int i = 0; i < N; i++)
             {
                 names[i] = datal[i].name;
                 ED[i] = datal[i].ed;
@@ -123,12 +127,31 @@ namespace Zapasi
                     C[j, i] = int.Parse(strs[2]);
                 }
             }
+
+            if(stratDGVs.Length == f)
+            {
+                for(int i =0; i<f; i++)
+                {
+                    DataTable dt = new DataTable();
+                    for (int j = 0; j < stratDGVs[i].ColumnCount; j++)
+                        dt.Columns.Add(stratDGVs[i].Columns[j].HeaderText);
+
+                    for(int j=0; j<N; j++)
+                    {
+                        dt.Rows.Add(names[j], Kr[j, i], C[j, i]);
+                    }
+                    stratDGVs[i].Columns.Clear();
+                    stratDGVs[i].DataSource = dt;
+                }
+
+            }
+
             return true;
         }
 
         void SolvePrimer()
         {
-             solver = new Solver(N, T, f, F, Kr, C, V, CC, ED);
+            solver = new Solver(N, T, f, F, Kr, C, V, CC, ED);
             best_strat = solver.Calculate();
         }
         int best_strat = -1;
@@ -145,11 +168,11 @@ namespace Zapasi
                 dt.Rows.Add("стратегия" + (i + 1), solver.TO[i], solver.TC[i], solver.TCOST[i]);
             }
 
-         //   dataGridView2.Rows.Clear();
+            //   dataGridView2.Rows.Clear();
             dataGridView2.Columns.Clear();
 
             dataGridView2.DataSource = dt;
-            dataGridView2.Rows[best_strat].DefaultCellStyle.Font = 
+            dataGridView2.Rows[best_strat].DefaultCellStyle.Font =
                 new Font("Arial", 12, FontStyle.Bold);
 
         }
@@ -166,9 +189,18 @@ namespace Zapasi
         int[,] Kr;
         int[,] C;
 
-        private void dataGridView3_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
+        DataGridView[] stratDGVs;
 
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (!LoadPrimer())
+                return;
+            if (!LoadData())
+                return;
+            if (!LoadStrat())
+                return;
+            button1.Enabled = true;
         }
 
 
