@@ -84,12 +84,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Desktop\км\PuassonGenerator\PuassonGeneration\PuassonGeneration.csproj">
-      <Project>{7a7a852d-a7ae-4e92-bb0c-acae21b07c25}</Project>
-      <Name>PuassonGeneration</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="USATU.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

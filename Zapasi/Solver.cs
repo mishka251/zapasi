@@ -10,7 +10,10 @@ namespace Zapasi
     {
 
         #region inputVars
-
+        /// <summary>
+        /// Кол-во раз моделирования
+        /// </summary>
+        int Iters;
         /// <summary>
         /// Кол-во видов товаров
         /// </summary>
@@ -65,6 +68,19 @@ namespace Zapasi
         /// полные затраты
         /// </summary>
         public double[] TCOST;
+
+        /// <summary>
+        /// затраты на организацию поставки
+        /// </summary>
+        public Double[] cumTO;
+        /// <summary>
+        /// Затраты на хранение запасов
+        /// </summary>
+        public double[] cumTC;
+        /// <summary>
+        /// полные затраты
+        /// </summary>
+        public double[] cumTCOST;
         /// <summary>
         /// Лучшая стратегия Kr - крит запас и-того товара, C - предкритический 
         /// </summary>
@@ -111,6 +127,7 @@ namespace Zapasi
         #endregion
 
         public Solver(
+            int iters,
             int n,
             int t,
            int f,
@@ -125,6 +142,7 @@ namespace Zapasi
             int[] ed
             )
         {
+            Iters = iters;
             N = n;
             T = t;
             this.f = f;
@@ -147,7 +165,7 @@ namespace Zapasi
             TO = new double[f];
             TC = new double[f];
             TCOST = new double[f];
-            for(int i =0; i<f; i++)
+            for (int i = 0; i < f; i++)
             {
                 TO[i] = TC[i] = TCOST[i] = 0;
             }
@@ -169,15 +187,37 @@ namespace Zapasi
             double min_cost = double.MaxValue;
             int best_str = -1;
 
+            cumTC = new double[f];
+            cumTCOST = new double[f];
+            cumTO = new double[f];
+
+            for (int i = 0; i < f; i++)
+            {
+                cumTO[i] = 0;
+                cumTCOST[i] = 0;
+                cumTC[i] = 0;
+            }
+
+            for (int i = 0; i < Iters; i++)
+            {
+                for (int strat = 0; strat < f; strat++)
+                {
+                    CalculateStrat(strat);
+                    cumTO[strat] += TO[strat];
+                    cumTC[strat] += TC[strat];
+                    cumTCOST[strat] += TCOST[strat];
+                }
+            }
+
             for (int strat = 0; strat < f; strat++)
             {
-                CalculateStrat(strat);
-                if (TCOST[strat] < min_cost)
+                if (cumTCOST[strat] < min_cost)
                 {
-                    min_cost = TCOST[strat];
+                    min_cost = cumTCOST[strat];
                     best_str = strat;
                 }
             }
+
             return best_str;
         }
 
@@ -198,7 +238,7 @@ namespace Zapasi
                     if (t > 0)//если было до этого что-то
                     {
                         IN[i, t] = IN[i, t - 1] - D1;//пересчитали запасы
-                        
+
                     }
                 }
 

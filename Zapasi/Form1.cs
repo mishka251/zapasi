@@ -175,7 +175,13 @@ namespace Zapasi
 
         void SolvePrimer()
         {
-            solver = new Solver(N, T, f, F, Kr, C, V, CC, ED);
+            int iters;
+            if(!int.TryParse(textBox1.Text, out iters))
+            {
+                MessageBox.Show("Введите кол-во итераций");
+                return;
+            }
+            solver = new Solver(iters, N, T, f, F, Kr, C, V, CC, ED);
             best_strat = solver.Calculate();
         }
         int best_strat = -1;
@@ -189,7 +195,7 @@ namespace Zapasi
 
             for (int i = 0; i < f; i++)
             {
-                dt.Rows.Add("стратегия" + (i + 1), solver.TO[i], solver.TC[i], solver.TCOST[i]);
+                dt.Rows.Add("стратегия" + (i + 1), solver.cumTO[i], solver.cumTC[i], solver.cumTCOST[i]);
             }
 
             dataGridView2.Columns.Clear();

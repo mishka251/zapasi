@@ -5,8 +5,6 @@ VisualStudioVersion = 15.0.28307.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zapasi", "Zapasi\Zapasi.csproj", "{CE3DD363-D503-4B9A-A582-4C0293CE32A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PuassonGeneration", "..\..\..\Desktop\км\PuassonGenerator\PuassonGeneration\PuassonGeneration.csproj", "{7A7A852D-A7AE-4E92-BB0C-ACAE21B07C25}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{CE3DD363-D503-4B9A-A582-4C0293CE32A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE3DD363-D503-4B9A-A582-4C0293CE32A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CE3DD363-D503-4B9A-A582-4C0293CE32A7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7A7A852D-A7AE-4E92-BB0C-ACAE21B07C25}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7A7A852D-A7AE-4E92-BB0C-ACAE21B07C25}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7A7A852D-A7AE-4E92-BB0C-ACAE21B07C25}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7A7A852D-A7AE-4E92-BB0C-ACAE21B07C25}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
